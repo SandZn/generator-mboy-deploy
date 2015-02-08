@@ -1,4 +1,4 @@
-![Monkee-Boy](https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/113009/mboy-1403710932.jpg) generator-mboy-deploy [![npm version](https://badge.fury.io/js/generator-mboy-deploy.svg)](http://badge.fury.io/js/generator-mboy-deploy) [![Build Status](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy.svg)](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy)
+![Monkee-Boy](https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/113009/mboy-1403710932.jpg) generator-mboy-deploy [![npm version](https://img.shields.io/npm/v/generator-mboy-deploy.svg?style=flat-square)](http://badge.fury.io/js/generator-mboy-deploy) [![Build Status](https://img.shields.io/travis/Monkee-Boy/generator-mboy-deploy.svg?style=flat-square)](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy) [![Code Climate](https://img.shields.io/codeclimate/github/Monkee-Boy/generator-mboy-deploy.svg?style=flat-square)](https://codeclimate.com/github/Monkee-Boy/generator-mboy-deploy) [![Package Dependencies](https://www.versioneye.com/user/projects/54d7c65d2bc790052a000078/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/54d7c65d2bc790052a000078)
 ==============
 
 `mboy-deploy` is a Yeoman generator for initializing the Monkee-Boy Capistrano deployment templates. Yeoman will guide you along and ask a few important questions to get you ready for deployments.
@@ -7,17 +7,27 @@ The deploy templates Yeoman uses can be found at [Monkee-Boy/deploy-templates](h
 
 ## Usage
 
-```bash
+```
 npm install -g yo
 ```
 
-```bash
+```
 npm install -g generator-mboy-deploy
 ```
 
-```bash
+```
 yo mboy-deploy
 ```
+
+### Tests
+
+* **Mocha**
+  * `npm install -g mocha`
+  * Run tests with `mocha`
+* **Code Coverage**
+  * `npm install -g istanbul`
+  * Generate coverage with `istanbul cover _mocha -- -R spec`
+
 
 ## To Do
 
