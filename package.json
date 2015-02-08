@@ -1,0 +1,36 @@
+{
+  "name": "generator-mboy-deploy",
+  "version": "0.0.1",
+  "description": "Generator for Monkee-Boy deployment templates.",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "Monkee-Boy/generator-mboy-deploy",
+  "author": {
+    "name": "James Fleeting",
+    "email": "james@monkee-boy.com",
+    "url": "https://github.com/Monkee-Boy"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.18.0",
+    "chalk": "^0.5.0",
+    "yosay": "^0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
