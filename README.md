@@ -1,4 +1,4 @@
-![Monkee-Boy](https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/113009/mboy-1403710932.jpg) generator-mboy-deploy [![GitHub version](https://badge.fury.io/gh/Monkee-Boy%2Fgenerator-mboy-deploy.svg)](http://badge.fury.io/gh/Monkee-Boy%2Fgenerator-mboy-deploy) [![Build Status](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy.svg)](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy)
+![Monkee-Boy](https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/113009/mboy-1403710932.jpg) generator-mboy-deploy [![npm version](https://badge.fury.io/js/generator-mboy-deploy.svg)](http://badge.fury.io/js/generator-mboy-deploy) [![Build Status](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy.svg)](https://travis-ci.org/Monkee-Boy/generator-mboy-deploy)
 ==============
 
 `mboy-deploy` is a Yeoman generator for initializing the Monkee-Boy Capistrano deployment templates. Yeoman will guide you along and ask a few important questions to get you ready for deployments.
