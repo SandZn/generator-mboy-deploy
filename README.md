@@ -31,11 +31,12 @@ yo mboy-deploy
 
 ## To Do
 
-* [ ] Ask if using WordPress for default linked_files and linked_dirs.
-* [ ] Ask if using npm and add build:npm task.
-* [ ] Ask if using bower and add build:bower task.
+* [x] Ask if using WordPress for default linked_files and linked_dirs.
+* [x] Ask if using npm and add build:npm task.
+* [x] Ask if using bower and add build:bower task.
 * [ ] Ask if using Jekyll and add build:jekyll task.
-* [ ] Add next steps when generator is done.
+* [ ] Ask if using Laravel and add migration, seed, etc tasks.
+* [x] Add next steps when generator is done.
   * Ex: linked_files, linked_dirs, check any values you left as default, etc.
 
 

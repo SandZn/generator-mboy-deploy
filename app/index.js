@@ -11,7 +11,7 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    this.log([
+    this.log(['\n',
       chalk.yellow(' ##     ##    #####    ##    ##   ##   ##  #######  #######         #####      #####   ##    ##'),
       chalk.yellow('###    ###   #######   ###   ##   ##  ##   #######  #######         ######    #######  ##    ##'),
       chalk.yellow('####   ###  ##     ##  ###   ##   ## ##    ##       ##              ##  ##   ##     ## ##    ##'),
@@ -29,9 +29,9 @@ module.exports = yeoman.generators.Base.extend({
       'Welcome to the ' + chalk.green('mBoy Deploy') + ' generator!'
     ));
 
-    this.log('I am going to generate the default Monkee-Boy deployment config. For more details on this default template please refer to the mBoy Deploy Templates repo.');
+    this.log('I am going to generate the default Monkee-Boy deployment config. For more details on this\ndefault template please refer to the mBoy Deploy Templates repo.\n');
 
-    this.log('\n\nTo get started I have a few questions to ask. These allow me to customize the deploy config a little for you. You can leave the defaults for any or all of these if you wish to modify them yourself.');
+    this.log('To get started I have a few questions to ask. These allow me to customize the deploy config\na little for you. You can leave the defaults for any or all of these if you wish to modify them yourself.\n');
 
     var prompts = [
       {
@@ -51,6 +51,21 @@ module.exports = yeoman.generators.Base.extend({
         name: 'projectDomainRoot',
         message: 'Will this project be forced to use www or the root domain?',
         choices: [ '_', 'www' ]
+      }, {
+        type: 'confirm',
+        name: 'optionWordPress',
+        message: 'Does this project use WordPress?',
+        default: false
+      }, {
+        type: 'confirm',
+        name: 'optionNpm',
+        message: 'Does this project use npm to manage packages?',
+        default: true
+      }, {
+        type: 'confirm',
+        name: 'optionBower',
+        message: 'Does this project use Bower to manage components?',
+        default: true
       }
     ];
 
@@ -59,6 +74,28 @@ module.exports = yeoman.generators.Base.extend({
       this.repoUrl = props.repoUrl;
       this.projectDomain = props.projectDomain;
       this.projectDomainRoot = props.projectDomainRoot;
+      this.optionWordPress = props.optionWordPress;
+      this.optionNpm = props.optionNpm;
+      this.optionBower = props.optionBower;
+      var linkedDirs = [],
+          linkedFiles = [];
+
+      // Compile linked_dirs and linked_files
+      if(this.optionWordPress) {
+        linkedDirs.push('wp-content/uploads');
+        linkedFiles.push('wp-config.php');
+      }
+
+      if(this.optionNpm) {
+        linkedDirs.push('node_modules');
+      }
+
+      if(this.optionBower) {
+        linkedDirs.push('bower_components');
+      }
+
+      this.linkedDirs = linkedDirs.join(' ');
+      this.linkedFiles = linkedFiles.join(' ');
 
       done();
     }.bind(this));
@@ -76,9 +113,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    // this.installDependencies({
-    //   skipInstall: this.options['skip-install'],
-    //   bower: false
-    // });
+    this.log('\nYour deploy files are good to go. Don\'t forget to double check your answers. When you are ready you should be good to deploy.\n' + chalk.green('May the code be with you.'));
   }
 });
