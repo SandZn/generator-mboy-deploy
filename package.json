@@ -23,12 +23,13 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.18.0",
     "chalk": "^0.5.0",
+    "yeoman-generator": "^0.18.0",
     "yosay": "^1.0.2"
   },
   "devDependencies": {
     "mocha": "*",
+    "coveralls": "^2.11.2",
     "underscore": "^1.7.0"
   },
   "peerDependencies": {
