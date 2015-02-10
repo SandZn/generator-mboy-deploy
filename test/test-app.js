@@ -89,4 +89,22 @@ describe('mboy-deploy:app', function () {
       done();
     });
   });
+
+  it('creates files with custom subdomain', function (done) {
+    runGen.withOptions(options).withPrompt(
+      _.extend(prompts, {
+        'projectName': 'Something Something Darkside',
+        'repoUrl': 'git@github.com:Monkee-Boy/generator-mboy-deploy.git',
+        'projectDomain': 'monkee-boy.com',
+        'projectDomainRoot': 'subdomain',
+        'projectDomainRootSubdomain': 'test',
+        'optionWordPress': false,
+        'optionNpm': false,
+        'optionBower': false,
+      })
+    ).on('end', function () {
+      assert.file(expected);
+      done();
+    });
+  });
 });

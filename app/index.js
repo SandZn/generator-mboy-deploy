@@ -50,7 +50,18 @@ module.exports = yeoman.generators.Base.extend({
         type: 'list',
         name: 'projectDomainRoot',
         message: 'Will this project be forced to use www or the root domain?',
-        choices: [ '_', 'www' ]
+        choices: [ '_', 'www', 'subdomain' ]
+      }, {
+        name: 'projectDomainRootSubdomain',
+        message: 'What subdomain will this project be deployed to?',
+        default: 'client',
+        when: function (answers) {
+          if(answers.projectDomainRoot === 'subdomain') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }, {
         type: 'confirm',
         name: 'optionWordPress',
@@ -73,7 +84,13 @@ module.exports = yeoman.generators.Base.extend({
       this.projectName = props.projectName;
       this.repoUrl = props.repoUrl;
       this.projectDomain = props.projectDomain;
-      this.projectDomainRoot = props.projectDomainRoot;
+      if(typeof props.projectDomainRootSubdomain !== 'undefined') {
+        this.projectDomainRoot = props.projectDomainRootSubdomain;
+        this.projectSubdomain = props.projectDomainRootSubdomain;
+      } else {
+        this.projectDomainRoot = props.projectDomainRoot;
+        this.projectSubdomain = false;
+      }
       this.optionWordPress = props.optionWordPress;
       this.optionNpm = props.optionNpm;
       this.optionBower = props.optionBower;
