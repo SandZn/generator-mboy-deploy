@@ -36,6 +36,7 @@ yo mboy-deploy
 * [x] Ask if using bower and add build:bower task.
 * [ ] Ask if using Jekyll and add build:jekyll task.
 * [ ] Ask if using Laravel and add migration, seed, etc tasks.
+* [ ] Ask if using mbCMS and add migrations, clear cache, etc tasks.
 * [x] Add next steps when generator is done.
   * Ex: linked_files, linked_dirs, check any values you left as default, etc.
 

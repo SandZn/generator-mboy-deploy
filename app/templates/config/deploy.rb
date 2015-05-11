@@ -4,16 +4,16 @@ lock '3.3.5'
 # Load up the mBoy gem
 Mboy.new() # Setting initial defaults.
 
-set :application, '<%= _.slugify(projectName) %>' # no spaces or special characters
+set :application, '<%= projectNameString %>' # no spaces or special characters
 set :project_name, '<%= projectName %>' # pretty name that can have spaces
 set :repo_url, '<%= repoUrl %>' # the git repo url
 set :current_dir, 'public_html' # almost always public_html
 
 # Default value for :linked_files is []
-<% if (linkedFiles) { %>set :linked_files, %w{<%= linkedFiles %>} # Note that this file must exist on the server already, Capistrano will not create it.<% } else { %># set :linked_files, fetch(:linked_files, []).push('') # Note that this file must exist on the server already, Capistrano will not create it.<% } %>
+<% if (linkedFiles) { %>set :linked_files, %w{<%= linkedFiles %>} # Note that this file must exist on the server already, Capistrano will not create it.<% } else { %>#set :linked_files, %w{} # Note that this file must exist on the server already, Capistrano will not create it.<% } %>
 
 # Default value for linked_dirs is []
-<% if (linkedDirs) { %>set :linked_dirs, %w{<%= linkedDirs %>}<% } else { %># set :linked_dirs, fetch(:linked_dirs, []).push('')<% } %>
+<% if (linkedDirs) { %>set :linked_dirs, %w{<%= linkedDirs %>}<% } else { %>#set :linked_dirs, %w{} # Note that Capistrano will create these directories if needed.<% } %>
 
 namespace :deploy do
   STDOUT.sync

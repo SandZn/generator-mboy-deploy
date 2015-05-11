@@ -40,13 +40,14 @@ describe('mboy-deploy:app', function () {
   });
 
   it('creates files with default prompts', function (done) {
-    runGen.withOptions(options).withPrompt(
+    runGen.withOptions(options).withPrompts(
       _.extend(prompts, {
         'projectName': '',
         'repoUrl': '',
         'projectDomain': '',
         'projectDomainRoot': 0,
         'optionWordPress': false,
+        'optionWordPressThemeDir': false,
         'optionNpm': true,
         'optionBower': true,
       })
@@ -57,13 +58,14 @@ describe('mboy-deploy:app', function () {
   });
 
   it('creates files with custom prompts', function (done) {
-    runGen.withOptions(options).withPrompt(
+    runGen.withOptions(options).withPrompts(
       _.extend(prompts, {
         'projectName': 'Something Something Darkside',
         'repoUrl': 'git@github.com:Monkee-Boy/generator-mboy-deploy.git',
         'projectDomain': 'monkee-boy.com',
         'projectDomainRoot': 1,
         'optionWordPress': true,
+        'optionWordPressThemeDir': 'client-theme',
         'optionNpm': true,
         'optionBower': true,
       })
@@ -74,13 +76,14 @@ describe('mboy-deploy:app', function () {
   });
 
   it('creates files with custom prompts but no addons', function (done) {
-    runGen.withOptions(options).withPrompt(
+    runGen.withOptions(options).withPrompts(
       _.extend(prompts, {
         'projectName': 'Something Something Darkside',
         'repoUrl': 'git@github.com:Monkee-Boy/generator-mboy-deploy.git',
         'projectDomain': 'monkee-boy.com',
         'projectDomainRoot': 0,
         'optionWordPress': false,
+        'optionWordPressThemeDir': false,
         'optionNpm': false,
         'optionBower': false,
       })
@@ -91,7 +94,7 @@ describe('mboy-deploy:app', function () {
   });
 
   it('creates files with custom subdomain', function (done) {
-    runGen.withOptions(options).withPrompt(
+    runGen.withOptions(options).withPrompts(
       _.extend(prompts, {
         'projectName': 'Something Something Darkside',
         'repoUrl': 'git@github.com:Monkee-Boy/generator-mboy-deploy.git',
@@ -99,6 +102,7 @@ describe('mboy-deploy:app', function () {
         'projectDomainRoot': 'subdomain',
         'projectDomainRootSubdomain': 'test',
         'optionWordPress': false,
+        'optionWordPressThemeDir': false,
         'optionNpm': false,
         'optionBower': false,
       })

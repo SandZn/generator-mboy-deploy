@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var string = require('underscore.string');
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
@@ -68,6 +69,17 @@ module.exports = yeoman.generators.Base.extend({
         message: 'Does this project use WordPress?',
         default: false
       }, {
+        name: 'optionWordPressThemeDir',
+        message: 'What is the name of the active theme directory (the directory name, not the theme name)?',
+        default: 'client-theme',
+        when: function (answers) {
+          if(answers.optionWordPress === true) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }, {
         type: 'confirm',
         name: 'optionNpm',
         message: 'Does this project use npm to manage packages?',
@@ -82,6 +94,7 @@ module.exports = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
+      this.projectNameString = string.slugify(props.projectName);
       this.repoUrl = props.repoUrl;
       this.projectDomain = props.projectDomain;
       if(typeof props.projectDomainRootSubdomain !== 'undefined') {
@@ -92,6 +105,11 @@ module.exports = yeoman.generators.Base.extend({
         this.projectSubdomain = false;
       }
       this.optionWordPress = props.optionWordPress;
+      if(typeof props.optionWordPressThemeDir !== 'undefined') {
+        this.optionWordPressThemeDir = props.optionWordPressThemeDir;
+      } else {
+        this.optionWordPressThemeDir = false;
+      }
       this.optionNpm = props.optionNpm;
       this.optionBower = props.optionBower;
       var linkedDirs = [],
@@ -100,7 +118,7 @@ module.exports = yeoman.generators.Base.extend({
       // Compile linked_dirs and linked_files
       if(this.optionWordPress) {
         linkedDirs.push('wp-content/uploads');
-        linkedFiles.push('wp-config.php');
+        linkedFiles.push('.htaccess', 'wp-config.php');
       }
 
       if(this.optionNpm) {
@@ -109,6 +127,10 @@ module.exports = yeoman.generators.Base.extend({
 
       if(this.optionBower) {
         linkedDirs.push('bower_components');
+      }
+
+      if(this.optionBower && this.optionWordPressThemeDir !== false) {
+        linkedDirs.push('wp-content/themes/'+this.optionWordPressThemeDir+'/components');
       }
 
       this.linkedDirs = linkedDirs.join(' ');
@@ -121,8 +143,6 @@ module.exports = yeoman.generators.Base.extend({
   writing: {
     deployfiles: function () {
       this.copy('Capfile', 'Capfile');
-      this.mkdir('config');
-      this.mkdir('config/deploy');
       this.template('config/deploy.rb', 'config/deploy.rb');
       this.template('config/deploy/production.rb', 'config/deploy/production.rb');
       this.template('config/deploy/dev.rb', 'config/deploy/dev.rb');
