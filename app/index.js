@@ -5,11 +5,11 @@ var yosay = require('yosay');
 var string = require('underscore.string');
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
+  initializing: function() {
     this.pkg = require('../package.json');
   },
 
-  prompting: function () {
+  prompting: function() {
     var done = this.async();
 
     this.log(['\n',
@@ -51,13 +51,13 @@ module.exports = yeoman.generators.Base.extend({
         type: 'list',
         name: 'projectDomainRoot',
         message: 'Will this project be forced to use www or the root domain?',
-        choices: [ '_', 'www', 'subdomain' ]
+        choices: ['_', 'www', 'subdomain']
       }, {
         name: 'projectDomainRootSubdomain',
         message: 'What subdomain will this project be deployed to?',
         default: 'client',
-        when: function (answers) {
-          if(answers.projectDomainRoot === 'subdomain') {
+        when: function(answers) {
+          if (answers.projectDomainRoot === 'subdomain') {
             return true;
           } else {
             return false;
@@ -72,8 +72,8 @@ module.exports = yeoman.generators.Base.extend({
         name: 'optionWordPressThemeDir',
         message: 'What is the name of the active theme directory (the directory name, not the theme name)?',
         default: 'client-theme',
-        when: function (answers) {
-          if(answers.optionWordPress === true) {
+        when: function(answers) {
+          if (answers.optionWordPress === true) {
             return true;
           } else {
             return false;
@@ -92,45 +92,47 @@ module.exports = yeoman.generators.Base.extend({
       }
     ];
 
-    this.prompt(prompts, function (props) {
+    this.prompt(prompts, function(props) {
       this.projectName = props.projectName;
       this.projectNameString = string.slugify(props.projectName);
       this.repoUrl = props.repoUrl;
       this.projectDomain = props.projectDomain;
-      if(typeof props.projectDomainRootSubdomain !== 'undefined') {
+      if (typeof props.projectDomainRootSubdomain !== 'undefined') {
         this.projectDomainRoot = props.projectDomainRootSubdomain;
         this.projectSubdomain = props.projectDomainRootSubdomain;
       } else {
         this.projectDomainRoot = props.projectDomainRoot;
         this.projectSubdomain = false;
       }
+
       this.optionWordPress = props.optionWordPress;
-      if(typeof props.optionWordPressThemeDir !== 'undefined') {
+      if (typeof props.optionWordPressThemeDir !== 'undefined') {
         this.optionWordPressThemeDir = props.optionWordPressThemeDir;
       } else {
         this.optionWordPressThemeDir = false;
       }
+
       this.optionNpm = props.optionNpm;
       this.optionBower = props.optionBower;
-      var linkedDirs = [],
-          linkedFiles = [];
+      var linkedDirs = [];
+      var linkedFiles = [];
 
       // Compile linked_dirs and linked_files
-      if(this.optionWordPress) {
+      if (this.optionWordPress) {
         linkedDirs.push('wp-content/uploads');
         linkedFiles.push('.htaccess', 'wp-config.php');
       }
 
-      if(this.optionNpm) {
+      if (this.optionNpm) {
         linkedDirs.push('node_modules');
       }
 
-      if(this.optionBower) {
+      if (this.optionBower) {
         linkedDirs.push('bower_components');
       }
 
-      if(this.optionBower && this.optionWordPressThemeDir !== false) {
-        linkedDirs.push('wp-content/themes/'+this.optionWordPressThemeDir+'/components');
+      if (this.optionBower && this.optionWordPressThemeDir !== false) {
+        linkedDirs.push('wp-content/themes/' + this.optionWordPressThemeDir + '/components');
       }
 
       this.linkedDirs = linkedDirs.join(' ');
@@ -141,7 +143,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: {
-    deployfiles: function () {
+    deployfiles: function() {
       this.copy('Capfile', 'Capfile');
       this.template('config/deploy.rb', 'config/deploy.rb');
       this.template('config/deploy/production.rb', 'config/deploy/production.rb');
@@ -149,7 +151,7 @@ module.exports = yeoman.generators.Base.extend({
     }
   },
 
-  install: function () {
+  install: function() {
     this.log('\nYour deploy files are good to go. Don\'t forget to double check your answers. When you are ready you should be good to deploy.\n' + chalk.green('May the code be with you.'));
   }
 });
