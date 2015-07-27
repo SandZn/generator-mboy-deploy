@@ -1,6 +1,6 @@
 {
   "name": "generator-mboy-deploy",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Generator for Monkee-Boy deployment templates.",
   "license": "MIT",
   "main": "app/index.js",
@@ -24,13 +24,13 @@
   ],
   "dependencies": {
     "chalk": "^1.0.0",
-    "yeoman-generator": "^0.20.1",
-    "yosay": "^1.0.3",
+    "yeoman-generator": "^0.20.2",
+    "yosay": "^1.0.5",
     "underscore.string": "^3.0.3"
   },
   "devDependencies": {
     "mocha": "*",
-    "coveralls": "^2.11.2",
+    "coveralls": "^2.11.3",
     "underscore": "^1.8.3"
   },
   "peerDependencies": {

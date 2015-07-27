@@ -42,7 +42,7 @@ module.exports = yeoman.generators.Base.extend({
       }, {
         name: 'repoUrl',
         message: 'What is the git repo url for this project?',
-        default: 'git@monkeeboy.git.beanstalkapp.com:/monkeeboy/PROJECTREPONAME.git'
+        default: 'git@bitbucket.org:monkeeboy/PROJECTREPONAME.git'
       }, {
         name: 'projectDomain',
         message: 'What is the domain for this project?',
