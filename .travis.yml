@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - '0.10'
+  - '0.11'
+  - '0.12'
+  - '4.2'
+  - '5.2'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-mboy-deploy' ]; then cd .. && eval "mv $currentfolder generator-mboy-deploy" && cd generator-mboy-deploy; fi
