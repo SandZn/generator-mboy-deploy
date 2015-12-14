@@ -10,3 +10,5 @@ notifications:
       - secure: "fy7h4pMp41OlX8+M3Gn6JF5ErlJJlFXfjsf/qo4SJhPytTKGVKV/f5uSQpCKBxy25THR0gKcKisFEYkHvmZW3t+FeNnCtB96q4MdHb8jGkV2nbcgQUJgoDw6T9be1/kD6YFBQX/uh92jh0A6PnBJuTQQ6HGeC2VbXVJgJHDBRxA="
     template:
       - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
+
+sudo: false
