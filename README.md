@@ -53,4 +53,4 @@ Handcrafted with ♥ in Austin, Texas by the [Monkee-Boy Troop](http://www.monke
 
 `generator-mboy-deploy` is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
-![Monkee-Boy](http://www.monkee-boy.com/img/logo-withtag-vertical-dark.jpg)
+![Monkee-Boy](http://assets.monkee-boy.com/mboy-logo-tagline.jpg)
