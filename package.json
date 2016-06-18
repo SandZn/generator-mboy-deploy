@@ -24,14 +24,15 @@
   ],
   "dependencies": {
     "chalk": "^1.1.1",
-    "yeoman-generator": "^0.22.5",
+    "yeoman-generator": "^0.22.0",
     "yosay": "^1.1.0",
     "underscore.string": "^3.2.2"
   },
   "devDependencies": {
     "mocha": "^2.5.3",
     "coveralls": "^2.11.6",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "yeoman-test": "^1.0.0",
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
