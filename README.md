@@ -3,9 +3,7 @@
 
 `mboy-deploy` is a Yeoman generator for initializing the Monkee-Boy Capistrano deployment templates. Yeoman will guide you along and ask a few important questions to get you ready for deployments.
 
-The deploy templates Yeoman uses can be found at [Monkee-Boy/deploy-templates](https://github.com/Monkee-Boy/deploy-templates).
-
-## Usage
+## Install
 
 ```
 npm install -g yo
@@ -15,9 +13,13 @@ npm install -g yo
 npm install -g generator-mboy-deploy
 ```
 
+## Usage
+
 ```
 yo mboy-deploy
 ```
+
+![yo mboy-deploy screenshot](http://assets.monkee-boy.com/dev/generator-mboy-deploy-screenshot.png)
 
 ### Tests
 
@@ -36,7 +38,7 @@ yo mboy-deploy
 * [x] Ask if using bower and add build:bower task.
 * [ ] Ask if using Jekyll and add build:jekyll task.
 * [ ] Ask if using Laravel and add migration, seed, etc tasks.
-* [ ] Ask if using mbCMS and add migrations, clear cache, etc tasks.
+* [x] Ask if using mbCMS and add migrations, clear cache, etc tasks.
 * [x] Add next steps when generator is done.
   * Ex: linked_files, linked_dirs, check any values you left as default, etc.
 
@@ -45,9 +47,9 @@ yo mboy-deploy
 
 Handcrafted with ♥ in Austin, Texas by the [Monkee-Boy Troop](http://www.monkee-boy.com/about/the-troop.php).
 
-| [![James Fleeting](https://avatars0.githubusercontent.com/u/23062?s=144)](https://github.com/fleeting) | [![Pete Gautier](https://avatars3.githubusercontent.com/u/5394199?s=144)](https://github.com/pgautier404) | [![Sarah Higley](https://avatars3.githubusercontent.com/u/3819570?s=144)](https://github.com/smhigley) | [![John,Hoover](https://avatars2.githubusercontent.com/u/48278?s=144)](https://github.com/defvayne23) |
-|---|---|---|---|
-| [James Fleeting](http://github.com/fleeting) | [Pete Gautier](https://github.com/pgautier404) | [Sarah Higley](https://github.com/smhigley) | [John Hoover](https://github.com/defvayne23) |
+| [![James Fleeting](https://avatars0.githubusercontent.com/u/23062?s=144)](https://github.com/fleeting) |
+|---|
+| [James Fleeting](http://github.com/fleeting) |
 
 ## License
 

@@ -1,5 +1,5 @@
-# config valid only for current version of Capistrano
-lock '<4.0.0'
+# config valid only for version of Capistrano
+lock '3.5.0'
 
 # Load up the mBoy gem
 Mboy.new() # Setting initial defaults.
@@ -8,6 +8,11 @@ set :application, '<%= projectNameString %>' # no spaces or special characters
 set :project_name, '<%= projectName %>' # pretty name that can have spaces
 set :repo_url, '<%= repoUrl %>' # the git repo url
 set :current_dir, 'public_html' # almost always public_html
+
+<% if (projectType === 'mbCMS') { %>
+set :config_repo_url, '<%= mbcmsConfigRepoUrl %>'
+set :git_strategy, Capistrano::Git::SlaveStrategy
+<% } %>
 
 # Default value for :linked_files is []
 <% if (linkedFiles) { %>set :linked_files, %w{<%= linkedFiles %>} # Note that this file must exist on the server already, Capistrano will not create it.<% } else { %>#set :linked_files, %w{} # Note that this file must exist on the server already, Capistrano will not create it.<% } %>
@@ -24,6 +29,11 @@ namespace :deploy do
       within release_path  do
         <% if (optionNpm) { %>invoke 'build:npm'<% } %>
         <% if (optionBower) { %>invoke 'build:bower'<% } %>
+        <% if (projectType === 'mbCMS') { %>
+        invoke 'build:configsetup'
+        invoke 'build:clearcache'
+        invoke 'build:migrations'
+        <% } %>
       end
     end
   end
@@ -31,11 +41,30 @@ namespace :deploy do
   desc 'mBoy Deployment Initialized.'
   Mboy.deploy_starting_message
 
+  <% if (projectType !== 'mbCMS') { %>
   desc 'Tag this release in git.'
   Mboy.tag_release
+  <% } %>
 
-  desc 'mBoy Deployment Steps'
-  Mboy.deploy_steps
+  <% if (projectType === 'mbCMS') { %>
+  desc 'Tag this release in git.'
+  after :updated, :tagrelease do
+    on roles(:web) do
+      within release_path do
+        set(:current_revision, capture(:cat, 'REVISION'))
+        resolved_release_path = capture(:pwd, "-P")
+        set(:release_name, resolved_release_path.split('/').last)
+      end
+    end
+
+    run_locally do
+      tag_msg = "Deployed by #{fetch :human} to #{fetch :stage} as #{fetch :release_name}"
+      tag_name = "#{fetch :stage }-#{fetch :release_name}"
+      execute :gits, %(tag -a #{tag_name} -m "#{tag_msg}")
+      execute :gits, "push --tags"
+    end
+  end
+  <% } %>
 
   desc 'mBoy HipChat Notifications'
   Mboy.hipchat_notify
@@ -52,19 +81,6 @@ namespace :build do
       end
     end
   end
-
-  desc 'Additional deploy steps for :build'
-  before :npm, :deploy_step_beforenpm do
-    on roles(:all) do
-      print 'Updating node modules......'
-    end
-  end
-
-  after :npm, :deploy_step_afternpm do
-    on roles(:all) do
-      puts '✔'.green
-    end
-  end
   <% } if (optionBower) { %>
   desc 'Install/update bower components.'
   task :bower do
@@ -73,18 +89,36 @@ namespace :build do
         execute :bower, 'install' # install components
       end
     end
-  end
-
-  before :bower, :deploy_step_beforebower do
-    on roles(:all) do
-      print 'Updating bower components......'
-    end
-  end
-
-  after :bower, :deploy_step_afterbower do
-    on roles(:all) do
-      puts '✔'.green
-    end
   end<% } %>
+
+  <% if (projectType === 'mbCMS') { %>
+  desc 'Setup mbCMS Config files.'
+  task :configsetup do
+    on roles(:web) do
+      within release_path do
+        execute :git, :clone, '-b', fetch(:branch), '--single-branch', fetch(:config_repo_url), 'mbcms_config'
+        execute :perl, 'scripts/symlink-configs.pl'
+      end
+    end
+  end
+
+  desc 'Clear mbCMS cache.'
+  task :clearcache do
+    on roles(:web) do
+      within release_path do
+        execute :perl, 'scripts/run_clearcache.pl', "#{shared_path}"
+      end
+    end
+  end
+
+  desc 'Run database migrations.'
+  task :migrations do
+    on roles(:web) do
+      within release_path do
+        execute :perl, 'scripts/run_migrations.pl', "#{release_path}"
+      end
+    end
+  end
+  <% } %>
 
 end

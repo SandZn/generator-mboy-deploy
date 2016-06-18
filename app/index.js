@@ -1,10 +1,11 @@
 'use strict';
+var generators = require('yeoman-generator');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var string = require('underscore.string');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = generators.Base.extend({
   initializing: function() {
     this.pkg = require('../package.json');
   },
@@ -27,7 +28,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ' + chalk.green('mBoy Deploy') + ' generator!'
+      'Welcome to the ' + chalk.green('MBoy Deploy') + ' v2.0 generator!'
     ));
 
     this.log('I am going to generate the default Monkee-Boy deployment config. For more details on this\ndefault template please refer to the mBoy Deploy Templates repo.\n');
@@ -50,7 +51,7 @@ module.exports = yeoman.generators.Base.extend({
       }, {
         type: 'list',
         name: 'projectDomainRoot',
-        message: 'Will this project be forced to use www or the root domain?',
+        message: 'Will this project live in _, www, or a subdomain?',
         choices: ['_', 'www', 'subdomain']
       }, {
         name: 'projectDomainRootSubdomain',
@@ -64,16 +65,27 @@ module.exports = yeoman.generators.Base.extend({
           }
         }
       }, {
-        type: 'confirm',
-        name: 'optionWordPress',
-        message: 'Does this project use WordPress?',
-        default: false
+        type: 'list',
+        name: 'projectType',
+        message: 'What type of project is this?',
+        choices: ['mbCMS', 'WordPress', 'Other']
+      }, {
+        name: 'mbcmsConfigRepoUrl',
+        message: 'What is the git repo url for the config files?',
+        default: 'git@bitbucket.org:monkeeboy/PROJECTCONFIGREPONAME.git',
+        when: function(answers) {
+          if (answers.projectType === 'mbCMS') {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }, {
         name: 'optionWordPressThemeDir',
         message: 'What is the name of the active theme directory (the directory name, not the theme name)?',
         default: 'client-theme',
         when: function(answers) {
-          if (answers.optionWordPress === true) {
+          if (answers.projectType === 'WordPress') {
             return true;
           } else {
             return false;
@@ -96,6 +108,7 @@ module.exports = yeoman.generators.Base.extend({
       this.projectName = props.projectName;
       this.projectNameString = string.slugify(props.projectName);
       this.repoUrl = props.repoUrl;
+      this.projectType = props.projectType;
       this.projectDomain = props.projectDomain;
       if (typeof props.projectDomainRootSubdomain !== 'undefined') {
         this.projectDomainRoot = props.projectDomainRootSubdomain;
@@ -105,7 +118,12 @@ module.exports = yeoman.generators.Base.extend({
         this.projectSubdomain = false;
       }
 
-      this.optionWordPress = props.optionWordPress;
+      if (typeof props.mbcmsConfigRepoUrl !== 'undefined') {
+        this.mbcmsConfigRepoUrl = props.mbcmsConfigRepoUrl;
+      } else {
+        this.mbcmsConfigRepoUrl = false;
+      }
+
       if (typeof props.optionWordPressThemeDir !== 'undefined') {
         this.optionWordPressThemeDir = props.optionWordPressThemeDir;
       } else {
@@ -118,7 +136,12 @@ module.exports = yeoman.generators.Base.extend({
       var linkedFiles = [];
 
       // Compile linked_dirs and linked_files
-      if (this.optionWordPress) {
+      if (this.projectType === 'mbCMS') {
+        linkedDirs.push('app/webroot/upload', 'app/webroot/files', 'app/tmp', 'app/Plugin/PageManager/View/Pages');
+        linkedFiles.push('.htaccess', 'app/Plugin/Content/Config/content_routes.php', 'app/Plugin/Content/Config/draft_content_routes.php', 'app/webroot/.htaccess');
+      }
+
+      if (this.projectType === 'WordPress') {
         linkedDirs.push('wp-content/uploads');
         linkedFiles.push('.htaccess', 'wp-config.php');
       }
@@ -144,14 +167,15 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     deployfiles: function() {
-      this.copy('Capfile', 'Capfile');
+      this.template('Capfile', 'Capfile');
       this.template('config/deploy.rb', 'config/deploy.rb');
       this.template('config/deploy/production.rb', 'config/deploy/production.rb');
       this.template('config/deploy/dev.rb', 'config/deploy/dev.rb');
+      this.template('config/deploy/staging.rb', 'config/deploy/staging.rb');
     }
   },
 
   install: function() {
-    this.log('\nYour deploy files are good to go. Don\'t forget to double check your answers. When you are ready you should be good to deploy.\n' + chalk.green('May the code be with you.'));
+    this.log('\nYour deploy files are ready.\n' + chalk.green('May the code be with you.'));
   }
 });
