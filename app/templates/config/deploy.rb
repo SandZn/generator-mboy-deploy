@@ -31,8 +31,8 @@ namespace :deploy do
         <% if (optionBower) { %>invoke 'build:bower'<% } %>
         <% if (projectType === 'mbCMS') { %>
         invoke 'build:configsetup'
-        invoke 'build:clearcache'
         invoke 'build:migrations'
+        invoke 'build:clearcache'
         <% } %>
       end
     end
