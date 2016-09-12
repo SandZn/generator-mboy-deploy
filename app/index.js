@@ -28,7 +28,7 @@ module.exports = generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ' + chalk.green('MBoy Deploy') + ' v2.0 generator!'
+      'Welcome to the ' + chalk.green('MBoy Deploy') + ' v2.2 generator!'
     ));
 
     this.log('I am going to generate the default Monkee-Boy deployment config. For more details on this\ndefault template please refer to the mBoy Deploy Templates repo.\n');
@@ -146,16 +146,20 @@ module.exports = generators.Base.extend({
         linkedFiles.push('.htaccess', 'wp-config.php');
       }
 
-      if (this.optionNpm) {
+      if (this.optionNpm && this.optionWordPressThemeDir === false) {
         linkedDirs.push('node_modules');
       }
 
-      if (this.optionBower) {
+      if (this.optionNpm && this.optionWordPressThemeDir !== false) {
+        linkedDirs.push('wp-content/themes/' + this.optionWordPressThemeDir + '/node_modules');
+      }
+
+      if (this.optionBower && this.optionWordPressThemeDir === false) {
         linkedDirs.push('bower_components');
       }
 
       if (this.optionBower && this.optionWordPressThemeDir !== false) {
-        linkedDirs.push('wp-content/themes/' + this.optionWordPressThemeDir + '/components');
+        linkedDirs.push('wp-content/themes/' + this.optionWordPressThemeDir + '/bower_components');
       }
 
       this.linkedDirs = linkedDirs.join(' ');

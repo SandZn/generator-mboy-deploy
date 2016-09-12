@@ -76,7 +76,7 @@ namespace :build do
   desc 'Install/update node packages.'
   task :npm do
     on roles(:web) do
-      within release_path do
+      <% if (projectType === 'WordPress') { %>within release_path.join('wp-content/themes/<%= optionWordPressThemeDir %>') do<% } else { %>within release_path do<% } %>
         execute :npm, 'install --silent --no-spin' # install packages
       end
     end
@@ -85,7 +85,7 @@ namespace :build do
   desc 'Install/update bower components.'
   task :bower do
     on roles(:web) do
-      within release_path do
+      <% if (projectType === 'WordPress') { %>within release_path.join('wp-content/themes/<%= optionWordPressThemeDir %>') do<% } else { %>within release_path do<% } %>
         execute :bower, 'install' # install components
       end
     end
@@ -120,5 +120,4 @@ namespace :build do
     end
   end
   <% } %>
-
 end
